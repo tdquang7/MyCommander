@@ -1,18 +1,27 @@
-// WinApp.cpp
+﻿// WinApp.cpp
 #include "WinApp.h"
 #include "resource.h"
 #include "MainWindow.h"
 
-WinApp::WinApp(HINSTANCE instance)
-    : _hInstance(instance) {
+WinApp& WinApp::Current() { 
+    static WinApp _instance;
+    return _instance;
 }
 
-int WinApp::Run(int nCmdShow) {
-    LoadStrings();
-    if (!RegisterMainWindow()) return FALSE;
-    if (!CreateMainWindow(nCmdShow)) return FALSE;
+WinApp::WinApp():_hInstance(GetModuleHandleW(nullptr)) {};
 
-    HACCEL hAccel = LoadAccelerators(_hInstance, MAKEINTRESOURCE(IDC_MYCOMMANDER));
+HINSTANCE WinApp::Instance() const { return _hInstance; }
+HWND WinApp::MainWindowHandle() const { return _hMainWnd; }
+HWND WinApp::ActiveWindowHandle() const { return _hActiveWnd; }
+
+int WinApp::Run(int nCmdShow) {
+    MainWindow win;
+    if (!win.Create(L"Tiêu đề", WS_OVERLAPPEDWINDOW))
+        return 0;
+
+    win.Show(nCmdShow);
+
+    HACCEL hAccel = LoadAccelerators(GetModuleHandle(NULL), MAKEINTRESOURCE(IDC_MYCOMMANDER));
 
     MSG msg{};
     while (GetMessage(&msg, nullptr, 0, 0)) {
@@ -22,37 +31,4 @@ int WinApp::Run(int nCmdShow) {
         }
     }
     return (int)msg.wParam;
-}
-
-void WinApp::LoadStrings() {
-    LoadStringW(_hInstance, IDS_APP_TITLE, _title, 100);
-    LoadStringW(_hInstance, IDC_MYCOMMANDER, _windowClass, 100);
-}
-
-bool WinApp::RegisterMainWindow() {
-    bool result = MainWindow::Register(_hInstance, _windowClass);
-    if (!result && GetLastError() == ERROR_CLASS_ALREADY_EXISTS) {
-        return true; // Class already registered, that's OK
-    }
-    return result;
-}
-
-bool WinApp::CreateMainWindow(int nCmdShow) {
-    _hMainWnd = MainWindow::Create(
-        _hInstance,
-        _windowClass,
-        _title
-    );
-
-    if (!_hMainWnd) {
-        DWORD error = GetLastError();
-        WCHAR errorMsg[256];
-        wsprintf(errorMsg, L"Failed to create window. Error code: %d", error);
-        MessageBox(nullptr, errorMsg, L"Error", MB_OK | MB_ICONERROR);
-        return false;
-    }
-
-    ShowWindow(_hMainWnd, nCmdShow);
-    UpdateWindow(_hMainWnd);
-    return true;
 }

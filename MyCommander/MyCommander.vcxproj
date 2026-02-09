@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -127,8 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseWindow.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="MyCommander.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinApp.h" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="AboutDialog.h" />
+    <ClCompile Include="BaseWindow.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MainWindow.h" />
     <ClCompile Include="MyCommander.cpp" />

@@ -1,21 +1,17 @@
 #pragma once
-#include <windows.h>
+#include "BaseWindow.h"
+#include "AboutDialog.h"
+#include "Resource.h"
+#include  "WinApp.h"
 
-class MainWindow {
-public:
-    static bool Register(HINSTANCE hInstance, const wchar_t* className);
-    static HWND Create(HINSTANCE hInstance,
-        const wchar_t* className,
-        const wchar_t* title);
+class MainWindow: public BaseWindow {
+protected:
+    LPCWSTR ClassName() const override;
 
-private:
-    MainWindow(HINSTANCE hInst);
-    LRESULT HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+    void OnCreate() override;
+    void OnPaint() override;
+    void OnCommand(WPARAM wParam, LPARAM lParam) override;
 
-    static LRESULT CALLBACK WndProc(
-        HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-private:
-    HINSTANCE _hInstance;
-	HWND _hwnd = nullptr;
+    void OnHelpAbout(WPARAM wParam, LPARAM lParam);
+    void OnFileExit(WPARAM wParam, LPARAM lParam);
 };

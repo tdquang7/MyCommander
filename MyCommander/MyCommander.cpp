@@ -6,6 +6,5 @@ int APIENTRY wWinMain(
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    WinApp app(hInstance);
-    return app.Run(nCmdShow);
+    WinApp::Current().Run(nCmdShow);
 }

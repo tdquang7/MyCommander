@@ -1,16 +1,15 @@
 #include "AboutDialog.h"
-#include "resource.h"
 
-void AboutDialog::Show(HINSTANCE hInstance) {
-    DialogBox(hInstance,
+void AboutDialog::Show() {
+    DialogBox(WinApp::Current().Instance(),
         MAKEINTRESOURCE(IDD_ABOUTBOX),
         nullptr,
         DialogProc);
 }
 
 INT_PTR CALLBACK AboutDialog::DialogProc(
-    HWND hDlg, UINT msg, WPARAM wParam, LPARAM) {
-
+    HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
     if (msg == WM_COMMAND &&
         (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)) {
         EndDialog(hDlg, LOWORD(wParam));

@@ -1,9 +1,12 @@
 #pragma once
 #include <windows.h>
+#include "AboutDialog.h"
+#include "resource.h"
+#include "WinApp.h"
 
 class AboutDialog {
 public:
-    static void Show(HINSTANCE hInstance);
+    static void Show();
 
 private:
     static INT_PTR CALLBACK DialogProc(

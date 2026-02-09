@@ -1,21 +1,21 @@
-#pragma once
+﻿#pragma once
 #include <windows.h>
+#include <memory>
+#include "Debug.h"
 
 class WinApp {
 public:
-    WinApp(HINSTANCE hInstance);
+    static WinApp& Current();
+    HINSTANCE Instance() const;
+    HWND MainWindowHandle() const;
+    HWND ActiveWindowHandle() const;
+    WinApp(const WinApp&) = delete;
     int Run(int nCmdShow);
-    HINSTANCE Instance() const { return _hInstance; }
-
+    ~WinApp() = default;
 private:
-    void LoadStrings();
-    bool RegisterMainWindow();
-    bool CreateMainWindow(int nCmdShow);
-
+    WinApp();
 private:
-    HINSTANCE _hInstance;
+	HINSTANCE _hInstance = nullptr;
     HWND _hMainWnd = nullptr;
-
-    WCHAR _title[100] = L"";
-    WCHAR _windowClass[100] = L"";
+	HWND _hActiveWnd = nullptr;
 };
