@@ -1,6 +1,7 @@
 ﻿#include "BaseWindow.h"
 #include "Resource.h"
 #include "WinApp.h"
+#include <windowsx.h>
 
 bool BaseWindow::Create(
     LPCWSTR windowName,
@@ -80,24 +81,17 @@ LRESULT CALLBACK BaseWindow::WindowProcThunk(
 
 LRESULT BaseWindow::HandleMessage(UINT msg, WPARAM wp, LPARAM lp) {
     switch (msg) {
-    case WM_NCCREATE:
-        return TRUE;
-
     case WM_CREATE:
-        OnCreate();
-        return 0;
+        HANDLE_WM_CREATE(_hwnd, wp, lp, OnCreate);
 
     case WM_COMMAND:
-        OnCommand(wp, lp);
-        return 0;
+        HANDLE_WM_COMMAND(_hwnd, wp, lp, OnCommand);
 
     case WM_PAINT:
-        OnPaint();
-        return 0;
+        HANDLE_WM_PAINT(_hwnd, wp, lp, OnPaint);
 
     case WM_DESTROY:
-        OnDestroy();
-        return 0;
+        HANDLE_WM_DESTROY(_hwnd, wp, lp, OnDestroy);
     }
 
     return DefWindowProcW(_hwnd, msg, wp, lp);
@@ -122,3 +116,13 @@ void BaseWindow::SetMainMenu(int id) {
     SetMenu(_hwnd, hMenu);
     DrawMenuBar(_hwnd);
 }
+
+BOOL BaseWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {}
+
+void BaseWindow::OnDestroy(HWND hwnd) { 
+    PostQuitMessage(0); 
+}
+
+void BaseWindow::OnPaint(HWND hwnd) {}
+
+void BaseWindow::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify) {}

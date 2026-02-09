@@ -30,10 +30,10 @@ protected:
     virtual LPCWSTR ClassName() const = 0;
     virtual LRESULT HandleMessage(UINT msg, WPARAM wp, LPARAM lp);
 
-    virtual void OnCreate() {}
-    virtual void OnDestroy() { PostQuitMessage(0); }
-    virtual void OnPaint() {}
-    virtual void OnCommand(WPARAM, LPARAM) {}
+    virtual BOOL OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);
+    virtual void OnDestroy(HWND hwnd);
+    virtual void OnPaint(HWND hwnd);
+    virtual void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify);
 
 protected:
     HWND _hwnd = nullptr;
@@ -47,7 +47,3 @@ private:
         HWND hwnd, UINT msg, WPARAM wp, LPARAM lp
     );
 };
-
-// TODO: Dùng mapping của WindowsX.h để làm gọn các macro xử lý message
-#define COMMAND(id, handler) \
-    if (LOWORD(wParam) == id) return handler(wParam, lParam);

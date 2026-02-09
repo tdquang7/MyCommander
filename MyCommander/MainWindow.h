@@ -8,10 +8,10 @@ class MainWindow: public BaseWindow {
 protected:
     LPCWSTR ClassName() const override;
 
-    void OnCreate() override;
-    void OnPaint() override;
-    void OnCommand(WPARAM wParam, LPARAM lParam) override;
+    BOOL OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) override;
+    void OnPaint(HWND hwnd) override;
+    void OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify) override;
 
-    void OnHelpAbout(WPARAM wParam, LPARAM lParam);
-    void OnFileExit(WPARAM wParam, LPARAM lParam);
+    void OnHelpAbout();
+    void OnFileExit();
 };
