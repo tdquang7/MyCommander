@@ -21,7 +21,7 @@ int WinApp::Run(int nCmdShow) {
 
     win.Show(nCmdShow);
 
-    HACCEL hAccel = LoadAccelerators(GetModuleHandle(NULL), MAKEINTRESOURCE(IDC_MYCOMMANDER));
+    HACCEL hAccel = LoadAccelerators(_hInstance, MAKEINTRESOURCE(IDC_MYCOMMANDER));
 
     MSG msg{};
     while (GetMessage(&msg, nullptr, 0, 0)) {

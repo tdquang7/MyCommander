@@ -1,5 +1,7 @@
 #pragma once
 #include "MainWindow.h"
+#include "DriveInfo.h"
+using namespace System::IO;
 
 LPCWSTR MainWindow::ClassName() const {
     return L"MainWindowClass";
@@ -10,14 +12,18 @@ BOOL MainWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {
     SetIconSmall(IDI_SMALL);
     SetMainMenu(IDC_MYCOMMANDER);
 
+    auto drives = DriveInfo::GetDrives();
+    // 
+    // Tạo drive button giống total commander
+    // Nạp danh sách các tập tin cùng với icon vào list view
+
+    // Tạo ra layout container
+
     return true;
 }
 
 void MainWindow::OnPaint(HWND hwnd) {
-    PAINTSTRUCT ps;
-    HDC hdc = BeginPaint(_hwnd, &ps);
-    TextOutW(hdc, 20, 20, L"Hello Win32 OO", 15);
-    EndPaint(_hwnd, &ps);
+    
 }
 
 // Helper macro to simplify command handling 

@@ -48,16 +48,14 @@ LRESULT CALLBACK BaseWindow::WindowProcSetup(
         auto* window = static_cast<BaseWindow*>(cs->lpCreateParams);
 
         SetWindowLongPtrW(
-            hwnd,
-            GWLP_USERDATA,
+            hwnd, GWLP_USERDATA,
             reinterpret_cast<LONG_PTR>(window)
         );
 
         window->_hwnd = hwnd;
 
         SetWindowLongPtrW(
-            hwnd,
-            GWLP_WNDPROC,
+            hwnd, GWLP_WNDPROC,
             reinterpret_cast<LONG_PTR>(WindowProcThunk)
         );
 
@@ -72,7 +70,7 @@ LRESULT CALLBACK BaseWindow::WindowProcThunk(
 ) {
     auto* window = reinterpret_cast<BaseWindow*>(
         GetWindowLongPtrW(hwnd, GWLP_USERDATA)
-        );
+    );
 
     return window
         ? window->HandleMessage(msg, wp, lp)
@@ -82,16 +80,16 @@ LRESULT CALLBACK BaseWindow::WindowProcThunk(
 LRESULT BaseWindow::HandleMessage(UINT msg, WPARAM wp, LPARAM lp) {
     switch (msg) {
     case WM_CREATE:
-        HANDLE_WM_CREATE(_hwnd, wp, lp, OnCreate);
+        return HANDLE_WM_CREATE(_hwnd, wp, lp, OnCreate);  
 
     case WM_COMMAND:
-        HANDLE_WM_COMMAND(_hwnd, wp, lp, OnCommand);
+        return HANDLE_WM_COMMAND(_hwnd, wp, lp, OnCommand);
 
     case WM_PAINT:
-        HANDLE_WM_PAINT(_hwnd, wp, lp, OnPaint);
+        return HANDLE_WM_PAINT(_hwnd, wp, lp, OnPaint);
 
     case WM_DESTROY:
-        HANDLE_WM_DESTROY(_hwnd, wp, lp, OnDestroy);
+        return HANDLE_WM_DESTROY(_hwnd, wp, lp, OnDestroy);
     }
 
     return DefWindowProcW(_hwnd, msg, wp, lp);
@@ -117,7 +115,7 @@ void BaseWindow::SetMainMenu(int id) {
     DrawMenuBar(_hwnd);
 }
 
-BOOL BaseWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) {}
+BOOL BaseWindow::OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct) { return true; }
 
 void BaseWindow::OnDestroy(HWND hwnd) { 
     PostQuitMessage(0); 

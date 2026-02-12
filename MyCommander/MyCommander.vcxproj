@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="BaseWindow.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="DriveInfo.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="AboutDialog.cpp" />
     <ClCompile Include="AboutDialog.h" />
     <ClCompile Include="BaseWindow.cpp" />
+    <ClCompile Include="DriveInfo.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MainWindow.h" />
     <ClCompile Include="MyCommander.cpp" />

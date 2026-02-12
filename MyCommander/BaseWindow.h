@@ -21,13 +21,13 @@ public:
 
     HWND Handle() const { return _hwnd; }
     void Show(int cmdShow = SW_SHOW);
+    virtual LPCWSTR ClassName() const = 0;
 
 public:
     void SetIcon(int id);
     void SetIconSmall(int id);
     void SetMainMenu(int id);
 protected:
-    virtual LPCWSTR ClassName() const = 0;
     virtual LRESULT HandleMessage(UINT msg, WPARAM wp, LPARAM lp);
 
     virtual BOOL OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);
